@@ -1,1 +1,10 @@
-.idea
+# Hugo
+.hugo_build.lock
+hugo_stats.json
+jsconfig.json
+_vendor/
+public/
+resources/
+
+# Node
+node_modules/
