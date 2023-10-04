@@ -1,0 +1,5 @@
+description = 'Masonry template for Hugo static sites.'
+
+# PostCSS
+[postCSS]
+  state = true
