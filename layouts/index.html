@@ -1,7 +1,6 @@
 {{ define "main" }}
+{{ partial "banner" . }}
 <div class="container-fluid">
-  <h1>{{ .Page.Title }}</h1>
-  <p class="lead">{{ .Page.Description }}</p>
 	<ul id="portfolio" class="portfolio text-center">
 		{{ range .Sections }}
 			{{ range .Pages }}
