@@ -1,16 +1,18 @@
 {{ $itemTitle := .Page.Title }}
 {{ $itemDescription := .Page.Description }}
 {{ $itemID := $itemTitle | urlize }}
+{{ $itemLink := .Page.RelPermalink }}
 
 {{ $itemImage := "" }}
 {{ $itemThumb := "" }}
 {{ $logo := resources.Get "img/logo/logo.png" }}
 {{ range first 1 (.Resources.ByType "image") }}
-  {{ with . }}
+  {{ with .Fill "500x500" }}
     {{ $itemImage = . }}
     {{ if $logo }}
       {{ $watermark := $logo.Resize "x100" }}
       {{ $itemImage = $itemImage.Filter (images.Overlay $watermark (sub $itemImage.Width $watermark.Width) (sub $itemImage.Height $watermark.Height)) }}
+      {{ $itemImage = $itemImage | resources.Copy (printf "%s" $itemImage.RelPermalink) }}
     {{ end }}
   {{ end }}
 
@@ -24,11 +26,12 @@
 {{ end }}
 
 <li class="portfolio-item">
-  <button class="btn collapsed" data-bs-toggle="collapse" data-bs-target="#{{ $itemID }}" aria-expanded="false">
+  {{/* Use <a> instead of <button> for href, maintains functionality for no-javascript browsers. */}}
+  <a href="{{ $itemLink }}" class="btn collapsed" data-bs-toggle="collapse" data-bs-target="#{{ $itemID }}" aria-expanded="false">
     {{ if $itemThumb }}
       <img src="{{ $itemThumb.RelPermalink }}" alt="{{ $itemTitle }}" />
     {{ end }}
-  </button>
+  </a>
   {{/* Portfolio Content */}}
   <div id="{{ $itemID }}" class="portfolio-content collapse fade" data-bs-parent="#portfolio">
     <div class="og-close" data-bs-toggle="collapse" data-bs-target="#{{ $itemID }}">{{ partial "icon" "x" }}</div>
