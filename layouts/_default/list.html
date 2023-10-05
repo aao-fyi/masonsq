@@ -1,33 +1,48 @@
-{{ define "main" }}
+{{ $itemTitle := .Page.Title }}
+{{ $itemDescription := .Page.Description }}
+{{ $itemID := $itemTitle | urlize }}
 
-  <!-- page title -->
-  <section class="page-title-alt position-relative overflow-hidden">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h3 class="font-tertiary mt-5">{{ .Title }}</h3>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /page title -->
+{{ $itemImage := "" }}
+{{ $itemThumb := "" }}
+{{ $logo := resources.Get "img/logo/logo.png" }}
+{{ range first 1 (.Resources.ByType "image") }}
+  {{ with . }}
+    {{ $itemImage = . }}
+    {{ if $logo }}
+      {{ $watermark := $logo.Resize "x100" }}
+      {{ $itemImage = $itemImage.Filter (images.Overlay $watermark (sub $itemImage.Width $watermark.Width) (sub $itemImage.Height $watermark.Height)) }}
+    {{ end }}
+  {{ end }}
 
-  <!-- about -->
-  <section class="section pt-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {{ range .Data.Pages }} 
-            <section class="section pt-1">
-              <h4 class=""><a class="text-dark" href="{{.Permalink}}">{{ .Title }}</a>
-              </h4>
-              <p class="cars-text">{{ .Summary }}</p>
-            </section>
-          {{ end }}
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /about -->
-
+  {{ with .Fill "250x250" }}
+    {{ $itemThumb = . }}
+    {{ if $logo }}
+      {{ $watermark := $logo.Resize "x25" }}
+      {{ $itemThumb = $itemThumb.Filter (images.Overlay $watermark (sub $itemThumb.Width $watermark.Width) (sub $itemThumb.Height $watermark.Height)) }}
+    {{ end }}
+  {{ end }}
 {{ end }}
+
+<li class="portfolio-item">
+  <button class="btn collapsed" data-bs-toggle="collapse" data-bs-target="#{{ $itemID }}" aria-expanded="false">
+    {{ if $itemThumb }}
+      <img src="{{ $itemThumb.RelPermalink }}" alt="{{ $itemTitle }}" />
+    {{ end }}
+  </button>
+  {{/* Portfolio Content */}}
+  <div id="{{ $itemID }}" class="portfolio-content collapse fade" data-bs-parent="#portfolio">
+    <div class="og-close" data-bs-toggle="collapse" data-bs-target="#{{ $itemID }}">{{ partial "icon" "x" }}</div>
+    <div class="row bg-body-secondary">
+      <div class="col-lg-5 offset-lg-1 col-md-12">
+        {{ if $itemImage }}
+          <img data-img-src="{{ $itemImage.RelPermalink }}" alt="{{ $itemTitle }}" />
+        {{ end }}
+      </div>
+      <div class="col-lg-6 col-md-12 text-start">
+        <h3>{{ $itemTitle }}</h3>
+        <p class="lead">{{ $itemDescription }}</p>
+      </div>
+    </div>
+  </div>
+</li>
+
