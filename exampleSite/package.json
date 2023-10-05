@@ -1,5 +1,5 @@
 {
-  "name": "@aao-fyi/masonsq",
+  "name": "@aao-fyi/masonsq-exampleSite",
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "postcss": "^8.4.23",

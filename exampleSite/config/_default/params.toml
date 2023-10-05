@@ -1,5 +1,9 @@
 description = 'Masonry template for Hugo static sites.'
 
+# Bootstrap
+[bootstrap]
+  state = false
+
 # PostCSS
 [postCSS]
-  state = true
+  state = false

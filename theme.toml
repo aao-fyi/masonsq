@@ -14,3 +14,4 @@ min_version = '0.110.0' # If changed, update hugo.toml
 [original]
   name = 'Michael Crawford'
   homepage = 'https://crawford.io/'
+  repo = 'https://github.com/mcrwfrd/hugo-frances-theme'
