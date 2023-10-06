@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{ partial "banner" . }}
-<div class="container-fluid">
+<div class="container-fluid pb-5">
   <ul id="portfolio" class="portfolio text-center">
     {{ range .Pages }}
       {{ .Render "list" }}

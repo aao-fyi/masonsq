@@ -1,0 +1,28 @@
+{{ define "main" }}
+{{ partial "banner" . }}
+<div class="container-fluid text-center">
+  <div class="row g-4">
+    {{ $itemTitle := .Page.Title }}
+    {{ $itemDescription := .Page.Description }}
+    {{ $itemID := $itemTitle | urlize }}
+    {{ $itemLink := .Page.RelPermalink }}
+
+    {{ $itemImage := "" }}
+    {{ $itemThumb := "" }}
+    {{ $logo := resources.Get "img/logo/logo.png" }}
+    {{ range first 1 (.Resources.ByType "image") }}
+      {{ with .Fill "500x500" }}
+        {{ $itemImage = . }}
+        {{ if $logo }}
+          {{ $watermark := $logo.Resize "x100" }}
+          {{ $itemImage = $itemImage.Filter (images.Overlay $watermark (sub $itemImage.Width $watermark.Width) (sub $itemImage.Height $watermark.Height)) }}
+          {{ $itemImage = $itemImage | resources.Copy (printf "%s" $itemImage.RelPermalink) }}
+        {{ end }}
+        <div class="col">
+          <img src="{{ $itemImage.RelPermalink }}"/>
+        </div>
+      {{ end }}
+    {{ end }}
+  </div>
+</div>
+{{ end }}
