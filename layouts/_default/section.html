@@ -6,5 +6,7 @@
       {{ .Render "list" }}
     {{ end }}
   </ul>
+
+  {{ .Content | safeHTML }}
 </div>
 {{ end }}

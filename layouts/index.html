@@ -8,5 +8,7 @@
 			{{ end }}
 		{{ end }}
 	</ul>
+
+	{{ .Content | safeHTML }}
 </div>
 {{ end }}
