@@ -52,7 +52,7 @@ hugo mod init gitlab.com/username/project
 Add Shock to a project as a theme compontent in the Hugo configuration file. The project is mirrored to GitHub; if necessary, replace `gitlab.com` with `github.com`.
 
 ```toml
-theme = 'gitlab.com/aao-fyi/shock'
+theme = 'gitlab.com/aao-fyi/masonsq'
 ```
 
 Fetch project modules.
